@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ELLORA • Müşteri Randevuları</title>
+
+<style>
+:root{
+  --radius:22px;
+  --postBg:
+    radial-gradient(1100px 820px at 50% 18%,
+      rgba(223,205,120,.30),
+      rgba(223,205,120,.15) 42%,
+      transparent 72%
+    ),
+    linear-gradient(180deg,
+      rgba(238,223,190,1) 0%,
+      rgba(238,223,190,1) 58%,
+      rgba(223,205,120,.15) 100%
+    );
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  padding:12px;
+}
+
+.postWrap{ width:min(1080px, 100%); }
+
+.post{
+  width:100%;
+  min-height:calc(100vh - 24px);
+  position:relative;
+  border-radius:var(--radius);
+  background:var(--postBg);
+  border:2px solid rgba(201,166,151,.75);
+  box-shadow:0 18px 55px rgba(120,80,40,.16);
+  overflow:hidden;
+
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  gap:14px;
+
+  padding:18px 16px;
+}
+@media (min-width:700px){
+  .post{ padding:54px 92px; gap:22px; }
+}
+
+.post::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border-radius:calc(var(--radius) - 8px);
+  border:1px solid rgba(201,166,151,.55);
+  pointer-events:none;
+}
+@media (min-width:700px){ .post::before{ inset:18px; } }
+
+/* ===== ÜST ===== */
+.slotLogo{ display:flex; align-items:center; justify-content:center; padding-top:6px; }
+.elloraLogo img{
+  max-height:160px; max-width:160px;
+  filter:drop-shadow(0 10px 16px rgba(120,80,40,.16));
+}
+@media (min-width:700px){
+  .elloraLogo img{ max-height:240px; max-width:240px; }
+}
+
+/* ===== ORTA ===== */
+.slotMid{ display:flex; align-items:flex-start; justify-content:center; }
+
+.customerCard{
+  width:100%;
+  border-radius:22px;
+  border:1px solid rgba(201,166,151,.65);
+  background:rgba(255,255,255,.28);
+  backdrop-filter: blur(10px);
+  box-shadow:0 18px 40px rgba(120,80,40,.12);
+  padding:16px;
+}
+@media (min-width:700px){ .customerCard{ padding:26px; border-radius:26px; } }
+
+.titleBox{ display:flex; flex-direction:column; gap:10px; }
+
+.titleBox h1{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.06em;
+  color:#3b2a18;
+}
+@media (min-width:700px){ .titleBox h1{ font-size:34px; } }
+
+.customerName{
+  display:block;
+  font-weight:900;
+  color:#3b2a18;
+  font-size:14px;
+  background:rgba(250,242,219,.90);
+  border:1px solid rgba(201,166,151,.65);
+  border-radius:999px;
+  padding:10px 14px;
+  width:fit-content;
+}
+@media (min-width:700px){ .customerName{ font-size:16px; } }
+
+.searchRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+.inp{
+  flex:1; min-width:220px;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid rgba(201,166,151,.70);
+  background:rgba(255,255,255,.75);
+  font-size:16px;
+  outline:none;
+}
+.btn{
+  width:100%;
+  padding:14px 18px;
+  border-radius:14px;
+  border:0;
+  cursor:pointer;
+  background:linear-gradient(180deg, #b58d53, #8b6536);
+  color:#fff;
+  font-weight:900;
+  font-size:16px;
+  box-shadow:0 12px 26px rgba(120,80,40,.18);
+}
+@media (min-width:520px){ .btn{ width:auto; min-width:180px; } }
+
+.msg{
+  margin-top:10px;
+  color:#5b4632;
+  font-weight:700;
+  min-height:22px;
+  font-size:14px;
+}
+
+/* ===== DESKTOP TABLO ===== */
+.tableWrap{
+  margin-top:14px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(201,166,151,.55);
+  background:rgba(255,255,255,.65);
+  display:none;
+}
+table{ width:100%; border-collapse:collapse; table-layout:fixed; font-size:14px; }
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid rgba(201,166,151,.35);
+  text-align:left;
+  color:#3b2a18;
+  vertical-align:top;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+th{ background:rgba(250,242,219,.95); font-weight:900; }
+.col-date{width:26%}
+.col-time{width:16%}
+.col-serv{width:38%}
+.col-status{width:20%}
+td.servCell{
+  white-space:normal;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+/* ===== MOBİL KART ===== */
+.cardsWrap{
+  margin-top:14px;
+  display:none;
+  gap:10px;
+}
+.card{
+  border-radius:16px;
+  border:1px solid rgba(201,166,151,.55);
+  background:rgba(255,255,255,.70);
+  padding:12px 12px;
+}
+.cardTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+.dt{
+  font-weight:900;
+  color:#3b2a18;
+  font-size:14px;
+  line-height:1.15;
+}
+.service{
+  margin-top:8px;
+  font-weight:800;
+  color:#3b2a18;
+  font-size:15px;
+  line-height:1.25;
+}
+
+/* ✅ durum rozetleri */
+.badge{
+  flex:0 0 auto;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(201,166,151,.65);
+  background:rgba(250,242,219,.95);
+  font-weight:900;
+  font-size:12px;
+  color:#3b2a18;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.badge.ok{
+  background:rgba(232,245,233,.95);
+  border-color:rgba(46,125,50,.35);
+  color:#1b5e20;
+}
+.badge.cancel{
+  background:rgba(255,235,238,.98);
+  border-color:rgba(198,40,40,.35);
+  color:#b71c1c;
+}
+.badge .tick{
+  width:16px;height:16px;
+  display:inline-block;
+}
+
+/* ✅ WhatsApp butonu (her zaman düzgün görünsün) */
+.wpBox{
+  margin-top:14px;
+  display:none;            /* JS açacak */
+  gap:10px;
+}
+.wpBtn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(201,166,151,.65);
+  background:rgba(250,242,219,.95);
+  cursor:pointer;
+  font-weight:900;
+  color:#2b1c0f;
+  text-decoration:none;
+}
+.wpBtn svg{ width:22px; height:22px; fill:#0b7a3b; }
+.wpHint{
+  font-size:13px;
+  font-weight:700;
+  color:#5b4632;
+  text-align:center;
+}
+
+/* mobilde kart, desktopta tablo */
+@media (max-width:620px){
+  .cardsWrap{ display:grid; }
+}
+@media (min-width:621px){
+  .tableWrap{ display:block; }
+}
+
+/* ===== FOOTER ===== */
+.slotFooter{ display:flex; flex-direction:column; justify-content:flex-end; gap:12px; }
+.divider{ height:1px; background:linear-gradient(90deg, transparent, rgba(201,166,151,.85), transparent); }
+
+.contactBar{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.30);
+  border:1px solid rgba(201,166,151,.65);
+  backdrop-filter: blur(6px);
+}
+@media (min-width:820px){
+  .contactBar{ grid-template-columns:1fr 1fr 1fr; border-radius:999px; }
+}
+
+.contactItem{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  padding:12px 12px;
+  border-radius:999px;
+  background:rgba(250,242,219,.85);
+  border:1px solid rgba(201,166,151,.60);
+  color:#3b2a18;
+  font-size:14px;
+  font-weight:700;
+}
+@media (min-width:820px){
+  .contactItem{ justify-content:center; font-size:17px; }
+}
+.contactItem svg{ width:22px; height:22px; fill:#B58D53; }
+</style>
+</head>
+
+<body>
+<div class="postWrap">
+  <div class="post">
+
+    <div class="slotLogo">
+      <div class="elloraLogo">
+        <img src="https://i.hizliresim.com/ge8kn4s.png" alt="Ellora">
+      </div>
+    </div>
+
+    <div class="slotMid">
+      <div class="customerCard">
+
+        <div class="titleBox">
+          <h1>Randevu Listesi</h1>
+          <div class="customerName" id="customerName">Müşteri: —</div>
+        </div>
+
+        <div class="searchRow">
+          <input class="inp" id="phone" placeholder="Telefon (05xx xxx xx xx)" inputmode="numeric" autocomplete="tel">
+          <button class="btn" id="btn">Sorgula</button>
+        </div>
+
+<div class="msg" id="msg">Telefon numaranızı girip “Sorgula”ya basın.</div>
+
+        <!-- DESKTOP TABLO -->
+        <div class="tableWrap" id="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-date">Tarih</th>
+                <th class="col-time">Saat</th>
+                <th class="col-serv">Hizmet</th>
+                <th class="col-status">Durum</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- MOBİL KART -->
+        <div class="cardsWrap" id="cardsWrap"></div>
+
+        <!-- ✅ LISTE ALTINA WHATSAPP -->
+        <div class="wpBox" id="wpBox">
+          <a class="wpBtn" id="wpBtn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 00-8.9 14.6L2 22l5.6-1.1A10 10 0 1012 2zm0 18a8 8 0 01-4.2-1.2l-.3-.2-3.3.6.7-3.2-.2-.3A8 8 0 1112 20zm4.3-5.7c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.6.1-.2.2-.7.7-.8.8-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.6-1-.6-.6-1-1.3-1.1-1.5-.1-.2 0-.3.1-.5.1-.1.2-.3.3-.4.1-.1.1-.2.2-.4.1-.1 0-.3 0-.4s-.6-1.4-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.5 2.4 3.7 3.3 2.2.9 2.2.6 2.6.6.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1z"/>
+            </svg>
+            İptal / Değişiklik için WhatsApp
+          </a>
+          <div class="wpHint">Randevunda değişiklik varsa buradan bize yazabilirsin.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slotFooter">
+      <div class="divider"></div>
+
+      <div class="contactBar">
+        <div class="contactItem">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.9 14.6L2 22l5.6-1.1A10 10 0 1012 2zm0 18a8 8 0 01-4.2-1.2l-.3-.2-3.3.6.7-3.2-.2-.3A8 8 0 1112 20zm4.3-5.7c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.6.1-.2.2-.7.7-.8.8-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.6-1-.6-.6-1-1.3-1.1-1.5-.1-.2 0-.3.1-.5.1-.1.2-.3.3-.4.1-.1.1-.2.2-.4.1-.1 0-.3 0-.4s-.6-1.4-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.5 2.4 3.7 3.3 2.2.9 2.2.6 2.6.6.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1z"/></svg>
+          WhatsApp • 0530 095 23 50
+        </div>
+
+        <div class="contactItem">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.3 22 2 13.7 2 3c0-.6.4-1 1-1h4.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .8-.3 1.1l-2.2 2.2z"/></svg>
+          Tel • 0530 095 23 50
+        </div>
+
+        <div class="contactItem">
+          <svg viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm6.5-.8a1.3 1.3 0 11-2.6 0 1.3 1.3 0 012.6 0zM12 9a3 3 0 100 6 3 3 0 000-6z"/></svg>
+          instagram • @elloraguzellik
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbwSBj2kq1wbT-oAg_R2oitt6Gzn5NnWTlmcZXNWBS9UYPE8GO822bhMKoGFh_lcvdA/exec";
+  const BUSINESS_WA = "https://wa.me/905300952350";
+
+  const phoneInp = document.getElementById("phone");
+  const btn = document.getElementById("btn");
+  const msg = document.getElementById("msg");
+  const tableWrap = document.getElementById("tableWrap");
+  const tbody = document.getElementById("tbody");
+  const cardsWrap = document.getElementById("cardsWrap");
+  const customerName = document.getElementById("customerName");
+  const wpBox = document.getElementById("wpBox");
+  const wpBtn = document.getElementById("wpBtn");
+
+  const digits = (s)=> (s||"").replace(/\D+/g,"");
+  const normStatus = (s)=> String(s||"").trim().toLowerCase();
+
+  function clearUI(){
+    tbody.innerHTML = "";
+    cardsWrap.innerHTML = "";
+    tableWrap.style.display = "none";
+    wpBox.style.display = "none";
+    customerName.textContent = "Müşteri: —";
+  }
+
+  function badgeClassAndLabel(status){
+    const st = normStatus(status);
+    if (st === "geldi") return {cls:"ok", label:"Geldi", tick:true};
+    if (st === "aktif") return {cls:"ok", label:"Aktif", tick:false};
+    if (st === "iptal" || st === "i̇ptal") return {cls:"cancel", label:"İptal", tick:false};
+    return {cls:"", label:status || "", tick:false};
+  }
+
+  function tickSvg(){
+    return `
+      <svg class="tick" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M9.2 16.2 4.9 12l1.4-1.4 2.9 2.9 8.4-8.4L19 6.5z"></path>
+      </svg>
+    `;
+  }
+
+  function renderTable(rows){
+    tbody.innerHTML = "";
+    for(const r of rows){
+      const bc = badgeClassAndLabel(r.durum);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td title="${r.tarih||""}">${r.tarih||""}</td>
+        <td title="${r.saat||""}">${r.saat||""}</td>
+        <td class="servCell" title="${r.hizmet||""}">${r.hizmet||""}</td>
+        <td title="${bc.label}">${bc.label}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+    tableWrap.style.display = "";
+  }
+
+  function renderCards(rows){
+    cardsWrap.innerHTML = "";
+    for(const r of rows){
+      const bc = badgeClassAndLabel(r.durum);
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="cardTop">
+          <div class="dt">${r.tarih || ""} • ${r.saat || ""}</div>
+          <div class="badge ${bc.cls}">
+            ${bc.tick ? tickSvg() : ""}
+            ${bc.label}
+          </div>
+        </div>
+        <div class="service">${r.hizmet || ""}</div>
+      `;
+      cardsWrap.appendChild(card);
+    }
+  }
+
+  function setBusinessWhatsappLink(customerMasked, phoneRaw){
+    const p = digits(phoneRaw);
+    const msgText =
+`Merhaba, randevumda değişiklik/iptal yapmak istiyorum.
+Müşteri: ${customerMasked || "-"}
+Telefon: ${p ? ("0"+p.slice(-10)) : "-"}
+
+Yardımcı olur musunuz?`;
+    wpBtn.href = BUSINESS_WA + "?text=" + encodeURIComponent(msgText);
+  }
+
+  async function search(){
+    msg.textContent = "Aranıyor...";
+    clearUI();
+
+    const raw = phoneInp.value.trim();
+    if(!digits(raw)){
+      msg.textContent = "Lütfen Önce Telefon Numarınızı giriniz.";
+      return;
+    }
+
+    const url = new URL(API_URL);
+    url.searchParams.set("action","search");
+    url.searchParams.set("phone", raw);
+
+    let data;
+    try{
+      const res = await fetch(url.toString());
+      data = await res.json();
+    }catch(e){
+      msg.textContent = "Bağlantı hatası. Tekrar dene.";
+      return;
+    }
+
+   const rows = (data && data.rows) ? data.rows : [];
+const cust = (data && data.customer) ? data.customer : "";
+
+customerName.textContent = "Müşteri: " + (cust || "—");
+
+// ✅ RATE LIMIT UYARISI
+if (data && data.limited) {
+  msg.textContent = "Çok fazla deneme yaptınız. Lütfen 10 dakika sonra tekrar deneyin.";
+  return;
+}
+
+if(!rows.length){
+  msg.textContent = "Kayıt bulunamadı.";
+  return;
+}
+
+msg.textContent = `${rows.length} randevu bulundu.`;
+
+renderCards(rows);
+renderTable(rows);
+
+// ✅ randevu varsa BUTON HER ZAMAN GÖRÜNSÜN
+setBusinessWhatsappLink(cust, raw);
+wpBox.style.display = "grid";
+  }
+
+  btn.addEventListener("click", search);
+  phoneInp.addEventListener("keydown", (e)=>{ if(e.key==="Enter") search(); });
+</script>
+</body>
+</html>
