@@ -235,10 +235,10 @@ td.servCell{
   display:inline-block;
 }
 
-/* ✅ WhatsApp butonu (her zaman düzgün görünsün) */
+/* ✅ WhatsApp butonu */
 .wpBox{
   margin-top:14px;
-  display:none;            /* JS açacak */
+  display:none;
   gap:10px;
 }
 .wpBtn{
@@ -333,8 +333,9 @@ td.servCell{
           <button class="btn" id="btn">Sorgula</button>
         </div>
 
-<div class="msg" id="msg">Telefon numaranızı girip “Sorgula”ya basın.</div>
+        <div class="msg" id="msg">Telefon numaranızı girip “Sorgula”ya basın.</div>
 
+        <!-- DESKTOP TABLO -->
         <div class="tableWrap" id="tableWrap">
           <table>
             <thead>
@@ -349,8 +350,10 @@ td.servCell{
           </table>
         </div>
 
+        <!-- MOBİL KART -->
         <div class="cardsWrap" id="cardsWrap"></div>
 
+        <!-- WHATSAPP -->
         <div class="wpBox" id="wpBox">
           <a class="wpBtn" id="wpBtn" href="#" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24">
@@ -389,7 +392,8 @@ td.servCell{
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbxxxXo0z_w79Xw6fBuHgUsXp_IeDPlfkwVbDJVfomtnY7rMA8jsgLXbERyZ0rmuUZOA1Q/exec";
+  // ✅ SENİN GÜNCEL API (JSONP destekli script)
+  const API_URL = "https://script.google.com/macros/s/AKfycbw7RIt1xvbDkkA7x_CwtYNyO4LrkgQXAzYB0S5_rFXesSP2Brt1HNNXc1SFraVgtpKdHg/exec";
   const BUSINESS_WA = "https://wa.me/905300952350";
 
   const phoneInp = document.getElementById("phone");
@@ -476,6 +480,31 @@ Yardımcı olur musunuz?`;
     wpBtn.href = BUSINESS_WA + "?text=" + encodeURIComponent(msgText);
   }
 
+  // ✅ JSONP helper (CORS yok)
+  function getJSONP(urlObj){
+    return new Promise((resolve, reject) => {
+      const cbName = "cb_" + Date.now() + "_" + Math.floor(Math.random()*9999);
+      const script = document.createElement("script");
+
+      window[cbName] = (resp) => {
+        try{ delete window[cbName]; }catch(_){}
+        script.remove();
+        resolve(resp);
+      };
+
+      urlObj.searchParams.set("callback", cbName);
+      script.src = urlObj.toString();
+      script.async = true;
+      script.onerror = () => {
+        try{ delete window[cbName]; }catch(_){}
+        script.remove();
+        reject(new Error("jsonp"));
+      };
+
+      document.body.appendChild(script);
+    });
+  }
+
   async function search(){
     msg.textContent = "Aranıyor...";
     clearUI();
@@ -492,37 +521,37 @@ Yardımcı olur musunuz?`;
 
     let data;
     try{
-      const res = await fetch(url.toString());
-      data = await res.json();
+      data = await getJSONP(url);
     }catch(e){
       msg.textContent = "Bağlantı hatası. Tekrar dene.";
       return;
     }
 
-   const rows = (data && data.rows) ? data.rows : [];
-const cust = (data && data.customer) ? data.customer : "";
+    // ✅ RATE LIMIT UYARISI
+    if (data && data.limited) {
+      customerName.textContent = "Müşteri: —";
+      msg.textContent = "Çok fazla deneme yaptınız. Lütfen 10 dakika sonra tekrar deneyin.";
+      return;
+    }
 
-customerName.textContent = "Müşteri: " + (cust || "—");
+    const rows = (data && data.rows) ? data.rows : [];
+    const cust = (data && data.customer) ? data.customer : "";
 
-// ✅ RATE LIMIT UYARISI
-if (data && data.limited) {
-  msg.textContent = "Çok fazla deneme yaptınız. Lütfen 10 dakika sonra tekrar deneyin.";
-  return;
-}
+    customerName.textContent = "Müşteri: " + (cust || "—");
 
-if(!rows.length){
-  msg.textContent = "Kayıt bulunamadı.";
-  return;
-}
+    if(!rows.length){
+      msg.textContent = "Kayıt bulunamadı.";
+      return;
+    }
 
-msg.textContent = `${rows.length} randevu bulundu.`;
+    msg.textContent = `${rows.length} randevu bulundu.`;
 
-renderCards(rows);
-renderTable(rows);
+    renderCards(rows);
+    renderTable(rows);
 
-// ✅ randevu varsa BUTON HER ZAMAN GÖRÜNSÜN
-setBusinessWhatsappLink(cust, raw);
-wpBox.style.display = "grid";
+    // ✅ randevu varsa BUTON HER ZAMAN GÖRÜNSÜN
+    setBusinessWhatsappLink(cust, raw);
+    wpBox.style.display = "grid";
   }
 
   btn.addEventListener("click", search);
@@ -530,6 +559,3 @@ wpBox.style.display = "grid";
 </script>
 </body>
 </html>
-
-
-
