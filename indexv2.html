@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ellora Güzellik Merkezi</title>
+  <meta name="description" content="Ellora Güzellik Merkezi - Lazer epilasyon, cilt bakımı, bölgesel incelme ve profesyonel güzellik hizmetleri." />
+  <style>
+    :root {
+      --bg: #fffaf6;
+      --bg-soft: #f8efe8;
+      --bg-soft-2: #f4e6da;
+      --white: #ffffff;
+      --text: #4f3a31;
+      --text-soft: #7a6154;
+      --muted: #9b7f71;
+      --gold: #b88b52;
+      --gold-dark: #946534;
+      --gold-soft: #e8d4b6;
+      --line: rgba(184, 139, 82, 0.26);
+      --line-strong: rgba(184, 139, 82, 0.5);
+      --shadow: 0 20px 50px rgba(184, 139, 82, 0.14);
+      --shadow-soft: 0 10px 28px rgba(184, 139, 82, 0.10);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+      --maxw: 460px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top center, rgba(184, 139, 82, 0.16), transparent 26%),
+        linear-gradient(180deg, #fffdfb 0%, var(--bg) 42%, var(--bg-soft-2) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.45;
+    }
+
+    body::before {
+      width: 220px;
+      height: 220px;
+      top: -60px;
+      right: -70px;
+      background: rgba(184, 139, 82, 0.14);
+    }
+
+    body::after {
+      width: 180px;
+      height: 180px;
+      bottom: 120px;
+      left: -70px;
+      background: rgba(184, 139, 82, 0.10);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 18px 14px 110px;
+    }
+
+    .mobile-shell {
+      width: 100%;
+      max-width: var(--maxw);
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 38px;
+      padding: 22px 18px 20px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(184, 139, 82, 0.14), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.24), transparent 36%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-chip,
+    .premium-chip {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      color: var(--gold-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .logo-area {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      margin: 12px 0 16px;
+    }
+
+    .logo-area img {
+      width: min(220px, 66vw);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 24px rgba(184, 139, 82, 0.16));
+    }
+
+    .headline {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 33px;
+      line-height: 1.08;
+      letter-spacing: -0.5px;
+      color: #6f4d3a;
+      font-weight: 700;
+    }
+
+    .headline span {
+      display: block;
+      color: var(--gold);
+    }
+
+    .subtext {
+      position: relative;
+      z-index: 1;
+      max-width: 325px;
+      margin: 14px auto 0;
+      text-align: center;
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+
+    .cta-row {
+      position: relative;
+      z-index: 1;
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .cta-btn {
+      min-height: 62px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff, #f8efe8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 8px;
+      color: var(--gold-dark);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(184, 139, 82, 0.16);
+    }
+
+    .section {
+      margin-top: 16px;
+      border-radius: var(--radius-xl);
+      padding: 22px 16px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.1;
+      color: #6f4d3a;
+      font-weight: 700;
+    }
+
+    .section-desc {
+      margin: 0 auto 18px;
+      max-width: 320px;
+      text-align: center;
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .service-item {
+      min-height: 70px;
+      border-radius: 999px;
+      border: 1.5px solid var(--line-strong);
+      background: linear-gradient(180deg, #ffffff, #f8efe8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px 16px;
+      color: var(--gold-dark);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .service-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(184, 139, 82, 0.15);
+    }
+
+    .falcon-box {
+      margin-top: 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--line-strong);
+      background: linear-gradient(180deg, #ffffff, #f8efe8);
+      text-align: center;
+      padding: 18px 16px;
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .falcon-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(184, 139, 82, 0.08);
+      color: var(--gold-dark);
+      font-weight: 800;
+      white-space: nowrap;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .why-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .why-card {
+      border-radius: 24px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(249,241,233,0.95));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .why-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: rgba(184, 139, 82, 0.08);
+      display: grid;
+      place-items: center;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .why-card h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 21px;
+      color: #6f4d3a;
+      font-weight: 700;
+    }
+
+    .why-card p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .promo-card {
+      border-radius: 28px;
+      padding: 20px 18px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top right, rgba(184, 139, 82, 0.12), transparent 35%),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,239,232,0.96));
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .promo-label {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(184, 139, 82, 0.07);
+      color: var(--gold-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 12px;
+    }
+
+    .promo-card h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 29px;
+      line-height: 1.1;
+      color: #6f4d3a;
+      font-weight: 700;
+    }
+
+    .promo-card p {
+      margin: 0 0 16px;
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .promo-action {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #d8b07a, #b88b52);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 10px 24px rgba(184, 139, 82, 0.2);
+    }
+
+    .footer-box {
+      margin-top: 16px;
+      border-radius: 28px;
+      padding: 18px;
+      text-align: center;
+      color: var(--text-soft);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .footer-box strong {
+      display: inline-block;
+      margin-bottom: 4px;
+      color: var(--gold-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+    }
+
+    .sticky-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: calc(100% - 22px);
+      max-width: 440px;
+      z-index: 50;
+      border-radius: 999px;
+      padding: 8px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 40px rgba(184, 139, 82, 0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .sticky-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sticky-btn {
+      min-height: 54px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff, #f8efe8);
+      color: var(--gold-dark);
+    }
+
+    .sticky-btn.primary {
+      background: linear-gradient(180deg, #d8b07a, #b88b52);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 390px) {
+      .headline {
+        font-size: 28px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .services,
+      .cta-row {
+        grid-template-columns: 1fr;
+      }
+
+      .service-item,
+      .falcon-box,
+      .cta-btn {
+        border-radius: 24px;
+      }
+
+      .sticky-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="mobile-shell">
+      <section class="hero glass-card reveal">
+        <div class="hero-top">
+          <div class="brand-chip">Ellora Güzellik Merkezi</div>
+          <div class="premium-chip">Premium Care</div>
+        </div>
+
+        <div class="logo-area">
+          <img src="logo.png" alt="Ellora Logo" />
+        </div>
+
+        <h1 class="headline">
+          Zarafet, bakım ve <span>ışıltılı bir deneyim</span>
+        </h1>
+
+        <p class="subtext">
+          Ellora’da profesyonel dokunuş, şık atmosfer ve güven veren hizmet anlayışıyla kendinize özel güzellik deneyimini keşfedin.
+        </p>
+
+        <div class="cta-row">
+          <a class="cta-btn" href="https://instagram.com/elloraguzellik" target="_blank">Instagram</a>
+          <a class="cta-btn" href="https://wa.me/905555555555?text=Merhaba%2C%20randevu%20almak%20istiyorum." target="_blank">WhatsApp</a>
+          <a class="cta-btn" href="https://maps.google.com/?q=Ellora+G%C3%BCzellik+Merkezi" target="_blank">Yol Tarifi</a>
+        </div>
+      </section>
+
+      <section class="section glass-card reveal" id="hizmetler">
+        <h2 class="section-title">Hizmetlerimiz</h2>
+        <p class="section-desc">Ellora’da güzellik ve bakım alanında özenle sunduğumuz profesyonel hizmetler.</p>
+
+        <div class="services">
+          <div class="service-item">Protez Tırnak</div>
+          <div class="service-item">Manikür</div>
+          <div class="service-item">Lazer Epilasyon</div>
+          <div class="service-item">Cilt Bakımı</div>
+          <div class="service-item">Medikal Cilt Bakımı</div>
+          <div class="service-item">Leke ve Kırışıklık Tedavisi</div>
+          <div class="service-item">Bölgesel İncelme</div>
+          <div class="service-item">Selülit Tedavisi</div>
+          <div class="service-item">Altın Oran Kaş Alımı</div>
+          <div class="service-item">Kirpik Bakımı</div>
+        </div>
+
+        <div class="falcon-box">
+          Lazer Epilasyon ilk seansta <strong>%70 dökülme garantisi</strong> veren
+          <span class="falcon-tag">Falcon 4 Pro</span>
+          cihazımız ile yapılmaktadır.
+        </div>
+      </section>
+
+      <section class="section glass-card reveal" id="neden-ellora">
+        <h2 class="section-title">Neden Ellora?</h2>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-number">01</div>
+            <h3>Şık ve güven veren atmosfer</h3>
+            <p>Modern çizgiler, özenli detaylar ve rahat hissettiren bir ortam ile bakım sürecinizi keyifli hale getiriyoruz.</p>
+          </div>
+
+          <div class="why-card">
+            <div class="why-number">02</div>
+            <h3>Profesyonel hizmet anlayışı</h3>
+            <p>Her danışanımıza ihtiyaçlarına uygun yaklaşım sunarak memnuniyet odaklı bir deneyim oluşturuyoruz.</p>
+          </div>
+
+          <div class="why-card">
+            <div class="why-number">03</div>
+            <h3>Güncel cihaz ve uygulamalar</h3>
+            <p>Bakım ve güzellik alanında etkili sonuç hedefleyen modern uygulamalarla kaliteyi ön planda tutuyoruz.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section glass-card reveal" id="kampanya">
+        <div class="promo-card">
+          <div class="promo-label">Ellora Ayrıcalığı</div>
+          <h3>Randevuya hazır mısınız?</h3>
+          <p>Size en uygun hizmet için bizimle hemen iletişime geçin, Ellora’nın profesyonel dünyasında yerinizi alın.</p>
+          <a class="promo-action" href="https://wa.me/905555555555?text=Merhaba%2C%20Ellora%20i%C3%A7in%20randevu%20almak%20istiyorum." target="_blank">Randevu Al</a>
+        </div>
+      </section>
+
+      <div class="footer-box glass-card reveal">
+        <strong>Ellora Güzellik Merkezi</strong>
+        <div>Güzelliğinize değer katan, özenli ve premium bakım deneyimi.</div>
+      </div>
+    </div>
+  </main>
+
+  <div class="sticky-bar">
+    <div class="sticky-grid">
+      <a class="sticky-btn primary" href="https://wa.me/905555555555?text=Merhaba%2C%20randevu%20almak%20istiyorum." target="_blank">Randevu Al</a>
+      <a class="sticky-btn" href="tel:+905555555555">Ara</a>
+      <a class="sticky-btn" href="https://maps.google.com/?q=Ellora+G%C3%BCzellik+Merkezi" target="_blank">Konum</a>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
