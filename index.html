@@ -3,421 +3,348 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ellora Güzellik Merkezi | Nevşehir</title>
-  <meta name="description" content="Ellora Güzellik Merkezi Nevşehir'de lazer epilasyon, cilt bakımı, profesyonel güzellik uygulamaları ve konforlu hizmet deneyimi." />
-  <meta name="theme-color" content="#b08a55" />
+  <title>Ellora Güzellik Merkezi</title>
+  <meta name="description" content="Ellora Güzellik Merkezi - Profesyonel bakım, şık atmosfer, güven veren hizmet." />
   <style>
     :root {
-      --bg: #f6efe4;
-      --bg-2: #efe2cd;
-      --card: rgba(255,255,255,.72);
-      --white: #fffdf9;
-      --text: #5f4728;
-      --muted: #7e6848;
-      --gold: #b08a55;
-      --gold-dark: #967141;
-      --line: #dfccb0;
-      --shadow: 0 18px 60px rgba(96, 71, 40, 0.12);
-      --radius: 26px;
+      --bg: #fffaf6;
+      --bg-soft: #f8efe8;
+      --card: rgba(255, 255, 255, 0.82);
+      --text: #4d392f;
+      --muted: #8f6e60;
+      --gold: #b58d53;
+      --gold-dark: #8b6536;
+      --gold-soft: #e9d6bb;
+      --line: rgba(181, 141, 83, 0.22);
+      --shadow: 0 18px 45px rgba(139, 101, 54, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --maxw: 480px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255,255,255,.75), transparent 30%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 18px 14px 34px;
-    }
-
-    .glass {
-      background: var(--card);
-      border: 1px solid rgba(223,204,176,.9);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 34px;
-      overflow: hidden;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      padding: 12px;
-      background: rgba(246,239,228,.88);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(223,204,176,.7);
-    }
-
-    .top-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      border-radius: 18px;
-      padding: 13px 12px;
-      font-size: 14px;
-      font-weight: 700;
-      border: 1px solid var(--line);
+        radial-gradient(circle at top, rgba(241, 226, 159, 0.25), transparent 35%),
+        linear-gradient(180deg, #fffdfb 0%, var(--bg) 38%, #f7eee7 100%);
       color: var(--text);
-      background: rgba(255,255,255,.78);
-      min-height: 50px;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-      text-align: center;
     }
 
-    .btn:hover { transform: translateY(-1px); }
-    .btn.primary {
-      background: linear-gradient(180deg, #b79363 0%, #a37c49 100%);
-      color: white;
-      border-color: transparent;
-      box-shadow: 0 10px 24px rgba(176,138,85,.28);
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 48px;
+    }
+
+    .phone {
+      width: 100%;
+      max-width: var(--maxw);
     }
 
     .hero {
       position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 34px;
       padding: 26px 20px 22px;
       background:
-        radial-gradient(circle at top right, rgba(176,138,85,.16), transparent 28%),
-        linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,251,245,.58));
+        linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,248,241,0.93)),
+        var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
     }
 
-    .logo-badge {
-      width: 104px;
-      height: 104px;
-      border-radius: 28px;
-      margin: 0 auto 16px;
-      background: linear-gradient(180deg, #f8efdf, #efe0c6);
-      border: 1px solid #e2ccb0;
-      display: grid;
-      place-items: center;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 10px 24px rgba(116, 83, 43, 0.08);
+    .glow {
+      position: absolute;
+      inset: auto -50px -80px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(181,141,83,0.18), transparent 70%);
+      pointer-events: none;
     }
 
-    .logo-text {
-      text-align: center;
-      line-height: 1.05;
-      color: var(--gold);
+    .top-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(181, 141, 83, 0.08);
+      border: 1px solid rgba(181, 141, 83, 0.16);
+      color: var(--gold-dark);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
     }
-    .logo-text .mark {
+
+    .logo-wrap {
+      margin: 22px 0 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo-wrap img {
+      width: min(220px, 62vw);
+      height: auto;
       display: block;
-      font-size: 26px;
-      letter-spacing: .08em;
-      font-weight: 800;
-    }
-    .logo-text .sub {
-      display: block;
-      margin-top: 6px;
-      font-size: 10px;
-      letter-spacing: .28em;
-      color: #8f6b3d;
-      text-transform: uppercase;
+      filter: drop-shadow(0 8px 20px rgba(181, 141, 83, 0.18));
     }
 
-    .eyebrow {
+    .headline {
       text-align: center;
-      text-transform: uppercase;
-      letter-spacing: .28em;
-      color: var(--gold);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    h1 {
-      margin: 12px 0 10px;
-      text-align: center;
-      font-size: 32px;
-      line-height: 1.1;
-      letter-spacing: -.02em;
-    }
-
-    .lead {
-      margin: 0 auto;
-      max-width: 420px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.72;
-    }
-
-    .mini-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .mini-card {
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 12px 10px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .mini-card strong {
-      display: block;
-      color: var(--text);
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    section { padding: 0 16px 18px; }
-
-    .card {
-      background: rgba(255,255,255,.72);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: 0 8px 28px rgba(96,71,40,.06);
-    }
-
-    .section-title {
-      margin: 0 0 6px;
-      font-size: 22px;
-      line-height: 1.2;
-    }
-
-    .section-text {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .service-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .service-item {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,249,241,.8));
-      padding: 16px;
-    }
-
-    .service-item h3 {
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-
-    .service-item p {
       margin: 0;
+      font-size: 29px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #6c4d3c;
+    }
+
+    .subtext {
+      margin: 12px auto 0;
+      max-width: 310px;
+      text-align: center;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 14.5px;
       line-height: 1.65;
     }
 
-    .highlight {
-      background: linear-gradient(180deg, rgba(184,145,91,.14), rgba(184,145,91,.08));
-      border: 1px solid rgba(176,138,85,.32);
+    .quick-links {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
-    .feature-list {
+    .quick-btn {
+      min-height: 60px;
+      border-radius: 18px;
+      border: 1px solid rgba(181, 141, 83, 0.18);
+      background: linear-gradient(180deg, #fff, #fbf3ec);
+      box-shadow: 0 8px 18px rgba(139, 101, 54, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 12px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .quick-btn:active {
+      transform: scale(0.98);
+    }
+
+    .section {
+      margin-top: 16px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 28px rgba(139, 101, 54, 0.07);
+      padding: 20px 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 23px;
+      font-weight: 700;
+      color: #6d4a38;
+      letter-spacing: -0.3px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .service-item {
+      border-radius: 18px;
+      padding: 14px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,239,232,0.92));
+      border: 1px solid rgba(181,141,83,0.14);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .why-list {
       display: grid;
       gap: 10px;
-      margin-top: 10px;
     }
 
-    .feature {
+    .why-item {
       display: flex;
       gap: 12px;
       align-items: flex-start;
+      padding: 14px;
       border-radius: 18px;
-      padding: 12px 13px;
-      background: rgba(255,255,255,.7);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,243,236,0.92));
+      border: 1px solid rgba(181,141,83,0.14);
+    }
+
+    .why-icon {
+      min-width: 36px;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, var(--gold-soft), #f3e5d1);
+      color: var(--gold-dark);
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .why-text strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #6a4938;
+    }
+
+    .why-text span {
+      display: block;
       color: var(--muted);
-      font-size: 14px;
+      line-height: 1.55;
+      font-size: 13.5px;
+    }
+
+    .footer-card {
+      margin-top: 16px;
+      padding: 18px;
+      text-align: center;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(181,141,83,0.09), rgba(255,255,255,0.88));
+      color: var(--muted);
+      font-size: 13.5px;
       line-height: 1.6;
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      margin-top: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex: 0 0 auto;
-      box-shadow: 0 0 0 4px rgba(176,138,85,.14);
+    .footer-card strong {
+      color: var(--gold-dark);
     }
 
-    .cta-box {
-      text-align: center;
-      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,248,238,.92));
-    }
+    @media (max-width: 380px) {
+      .headline {
+        font-size: 25px;
+      }
 
-    .cta-box p {
-      margin: 0 auto 16px;
-      max-width: 360px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
+      .section-title {
+        font-size: 20px;
+      }
 
-    .stack { display: grid; gap: 10px; }
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
 
-    .contact-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,255,255,.7);
-      font-size: 14px;
-    }
-
-    .contact-line strong { font-size: 15px; }
-
-    .footer {
-      padding: 8px 16px 26px;
-      text-align: center;
-      color: #947957;
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    @media (min-width: 560px) {
-      .wrap { padding-top: 24px; }
-      .service-grid.two {
-        grid-template-columns: 1fr 1fr;
+      .services {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="glass">
-      <div class="topbar">
-        <div class="top-actions">
-          <a class="btn primary" href="https://wa.me/905300952350" target="_blank" rel="noreferrer">WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/elloraguzellik" target="_blank" rel="noreferrer">Instagram</a>
-          <a class="btn" href="https://www.google.com/maps?q=Ellora+Güzellik+Merkezi+Nevşehir" target="_blank" rel="noreferrer">Yol Tarifi</a>
-        </div>
-      </div>
+  <main class="page">
+    <div class="phone">
+      <section class="hero">
+        <div class="glow"></div>
+        <div class="top-badge">Ellora Güzellik Merkezi</div>
 
-      <div class="hero">
-        <div class="logo-badge" aria-label="Ellora Güzellik Merkezi logosu">
-          <div class="logo-text">
-            <span class="mark">ELLORA</span>
-            <span class="sub">Güzellik Merkezi</span>
-          </div>
+        <div class="logo-wrap">
+          <img src="logo.png" alt="Ellora Logo" />
         </div>
 
-        <div class="eyebrow">Nevşehir Güzellik Merkezi</div>
-        <h1>Zarif dokunuş, profesyonel bakım</h1>
-        <p class="lead">
-          Ellora Güzellik Merkezi'nde lazer epilasyondan cilt bakımına kadar, özenli ve güven veren bir deneyim sunuyoruz.
+        <h1 class="headline">Güzelliğinize zarif bir dokunuş</h1>
+        <p class="subtext">
+          Profesyonel uygulamalar, özenli hizmet anlayışı ve şık atmosferle kendinizi çok daha iyi hissedin.
         </p>
 
-        <div class="mini-cards">
-          <div class="mini-card"><strong>0530 095 23 50</strong>Hızlı iletişim</div>
-          <div class="mini-card"><strong>@elloraguzellik</strong>Güncel paylaşımlar</div>
-          <div class="mini-card"><strong>Nevşehir</strong>Kolay ulaşım</div>
+        <div class="quick-links">
+          <a class="quick-btn" href="https://instagram.com/elloraguzellik" target="_blank">Instagram</a>
+          <a class="quick-btn" href="https://wa.me/905555555555" target="_blank">WhatsApp</a>
+          <a class="quick-btn" href="https://maps.google.com/?q=Ellora+G%C3%BCzellik+Merkezi" target="_blank">Yol Tarifi</a>
         </div>
-      </div>
+      </section>
 
-      <section>
-        <div class="card highlight">
-          <h2 class="section-title">Öne çıkan hizmetler</h2>
-          <p class="section-text">
-            İhtiyacına uygun, konfor odaklı ve modern uygulamalarla güzellik bakımını daha keyifli hale getiriyoruz.
-          </p>
+      <section class="section" id="hizmetler">
+        <h2 class="section-title">Hizmetlerimiz</h2>
+        <div class="services">
+          <div class="service-item">Protez Tırnak</div>
+          <div class="service-item">Manikür</div>
+          <div class="service-item">Lazer Epilasyon</div>
+          <div class="service-item">Cilt Bakımı</div>
+          <div class="service-item">Medikal Cilt Bakımı</div>
+          <div class="service-item">Leke ve Kırışıklık Tedavisi</div>
+          <div class="service-item">Bölgesel İncelme</div>
+          <div class="service-item">Selülit Tedavisi</div>
+          <div class="service-item">Altın Oran Kaş Alımı</div>
+          <div class="service-item">Kirpik Bakımı</div>
+        </div>
+        <div style="margin-top:14px;padding:14px;border-radius:18px;border:1px solid rgba(181,141,83,0.2);background:linear-gradient(180deg,#fff,#f8efe8);font-size:13.5px;color:#6a4938;text-align:center;">
+          Lazer Epilasyon ilk seansta <strong>%70 dökülme garantisi</strong> veren <strong>Falcon 4 Pro</strong> cihazımız ile yapılmaktadır.
+        </div>
+          
+      </section>
 
-          <div class="service-grid two">
-            <div class="service-item">
-              <h3>Lazer Epilasyon</h3>
-              <p>Falcon 4 Pro destekli konforlu uygulama ile daha özenli ve profesyonel bir süreç.</p>
+      <section class="section" id="neden-ellora">
+        <h2 class="section-title">Neden Ellora?</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon">01</div>
+            <div class="why-text">
+              <strong>Şık ve güven veren ortam</strong>
+              <span>Rahat hissedeceğiniz, temiz ve zarif detaylarla hazırlanmış bir deneyim sunuyoruz.</span>
             </div>
-            <div class="service-item">
-              <h3>Cilt Bakımı</h3>
-              <p>Cildin ihtiyacına göre planlanan bakımlar ile daha canlı ve dengeli bir görünüm.</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon">02</div>
+            <div class="why-text">
+              <strong>Özenli hizmet anlayışı</strong>
+              <span>Her danışanımıza ihtiyaçlarına uygun, dikkatli ve profesyonel yaklaşım sağlıyoruz.</span>
             </div>
-            <div class="service-item">
-              <h3>Profesyonel Güzellik Uygulamaları</h3>
-              <p>Merkez atmosferine ve danışan konforuna önem veren, detaylı ve titiz hizmet yaklaşımı.</p>
-            </div>
-            <div class="service-item">
-              <h3>Kişiye Uygun Planlama</h3>
-              <p>Her danışan için beklentiye uygun, düzenli ve anlaşılır bir bakım süreci hedeflenir.</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon">03</div>
+            <div class="why-text">
+              <strong>Modern güzellik yaklaşımı</strong>
+              <span>Güncel uygulamalarla konforu ve memnuniyeti ön planda tutan bir hizmet deneyimi oluşturuyoruz.</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section>
-        <div class="card">
-          <h2 class="section-title">Neden Ellora?</h2>
-          <p class="section-text">
-            Sadece işlem değil, baştan sona iyi hissettiren bir merkez deneyimi sunmayı önemsiyoruz.
-          </p>
-
-          <div class="feature-list">
-            <div class="feature"><span class="dot"></span><div>Şık ve sıcak merkez atmosferi ile rahat bir deneyim.</div></div>
-            <div class="feature"><span class="dot"></span><div>Güven veren yaklaşım, özenli uygulama ve düzenli iletişim.</div></div>
-            <div class="feature"><span class="dot"></span><div>Falcon 4 Pro ile desteklenen lazer epilasyon hizmeti.</div></div>
-            <div class="feature"><span class="dot"></span><div>WhatsApp, Instagram ve yol tarifi ile tek dokunuşta kolay ulaşım.</div></div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="card cta-box">
-          <h2 class="section-title">Bize hemen ulaş</h2>
-          <p>
-            Randevu almak, bilgi istemek ya da konumumuzu açmak için aşağıdaki butonları kullanabilirsin.
-          </p>
-          <div class="stack">
-            <a class="btn primary" href="https://wa.me/905300952350" target="_blank" rel="noreferrer">WhatsApp'tan Yaz</a>
-            <a class="btn" href="https://www.google.com/maps?q=Ellora+Güzellik+Merkezi+Nevşehir" target="_blank" rel="noreferrer">Google Haritalar'da Aç</a>
-            <a class="btn" href="https://www.instagram.com/elloraguzellik" target="_blank" rel="noreferrer">Instagram Sayfası</a>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="card">
-          <h2 class="section-title">İletişim</h2>
-          <p class="section-text">
-            Hızlı ulaşım için iletişim bilgilerimiz burada.
-          </p>
-
-          <div class="stack">
-            <div class="contact-line"><span>Telefon</span><strong>0530 095 23 50</strong></div>
-            <div class="contact-line"><span>Instagram</span><strong>@elloraguzellik</strong></div>
-            <div class="contact-line"><span>Konum</span><strong>Nevşehir</strong></div>
-          </div>
-        </div>
-      </section>
-
-      <div class="footer">
-        Ellora Güzellik Merkezi • Nevşehir<br />
-        Zarif görünüm, güven veren bakım, modern merkez deneyimi.
+      <div class="footer-card">
+        <strong>Ellora Güzellik Merkezi</strong><br />
+        Zarafet, bakım ve güveni bir araya getiren özel bir deneyim.
       </div>
     </div>
-  </div>
+  </main>
 </body>
 </html>
